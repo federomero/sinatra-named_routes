@@ -1,6 +1,6 @@
 # Sinatra::NamedRoutes
 
-TODO: Write a gem description
+Allows you to name routes on definition and build them by name using the `url_for` helper.
 
 ## Installation
 
@@ -18,7 +18,48 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+1- Register the extension
+
+    register Sinatra::NamedRoutes
+
+2- Name your routes when defining them
+
+    get named(:name, '/path') do
+      ...
+    end
+
+    get named(:short) do
+      ...
+    end
+
+3- Access the routes in your views
+
+    url_for(:name) #=> '/path'
+    url_for(:short) #=> '/short'
+
+### Params
+
+You can pass paramaters to the route like so:
+
+    get named(:with_params, '/path/:id') do
+      ...
+    end
+
+
+    url_for(:with_params, id: 2) #=> '/path/2'
+
+
+### Namespaces
+
+Named routes work with namespaces too:
+
+    namespace name(:admin) do
+      get named(:page, '/page/:id') do
+      end
+    end
+
+
+    url_for(:admin, :page, id: 3) #=> '/admin/page/3'
 
 ## Contributing
 
