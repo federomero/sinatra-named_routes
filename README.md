@@ -22,6 +22,10 @@ Or install it yourself as:
 
     register Sinatra::NamedRoutes
 
+If you are using modular style apps, you must include the helper explicitly in the `Sinatra::Base` subclasses by doing:
+
+    helpers Sinatra::NamedRoutes::Helpers
+
 2- Name your routes when defining them
 
     get named(:name, '/path') do

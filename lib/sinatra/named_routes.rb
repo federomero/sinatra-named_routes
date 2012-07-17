@@ -48,4 +48,6 @@ module Sinatra
       end
     end
   end
+
+  helpers Sinatra::NamedRoutes::Helpers
 end
