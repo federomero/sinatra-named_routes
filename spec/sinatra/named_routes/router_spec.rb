@@ -30,4 +30,10 @@ describe Sinatra::NamedRoutes::Router do
       subject.set('/two', :name)
     }.must_raise Sinatra::NamedRoutes::Exceptions::RouteNameTaken
   end
+
+  it 'should escape route parameters' do
+    subject.set('/admin/:id', :admin)
+    subject.get(:admin, {:id => 'a/b'}).must_equal '/admin/a%2Fb'
+  end
+
 end
