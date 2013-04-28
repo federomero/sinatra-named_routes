@@ -1,4 +1,5 @@
 require 'tree'
+require 'cgi'
 
 module Sinatra
   module NamedRoutes
@@ -41,9 +42,9 @@ module Sinatra
         options.each do |k, v|
           regex = /(:#{k})/
             if path =~ regex
-              path.gsub!(regex, v.to_s)
+              path.gsub!(regex, CGI.escape(v.to_s))
             else
-              query << "#{k}=#{v}"
+              query << "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}"
             end
         end
 

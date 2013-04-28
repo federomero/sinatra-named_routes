@@ -79,6 +79,14 @@ describe 'NamedRoutes' do
 
     end
 
+    it 'should escape unsafe characters correctly' do
+      mock_app{ get(named(:some_name, '/some_path/:id')) { url_for(:some_name, {:id => '/', 'k!ey' => 'v&lue'}) }}
+      get "/some_path/foo"
+
+      last_response.status.must_equal 200
+      last_response.body.must_equal "/some_path/%2F?k%21ey=v%26lue"
+    end
+
   end
 
   describe 'with namespaces' do
