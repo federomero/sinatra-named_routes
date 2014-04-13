@@ -37,6 +37,7 @@ module Sinatra
             raise Sinatra::NamedRoutes::Exceptions::NoRouteForName, "No route for name #{args.inspect}"
           end
         end
+        path.chomp!('/?')
 
         query = []
         options.each do |k, v|
