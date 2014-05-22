@@ -141,4 +141,51 @@ describe 'NamedRoutes' do
     end
   end
 
+  describe 'with optional trailing slash' do
+    describe 'and no trailing slash in the request' do
+
+      it 'should find the route correctly' do
+        mock_app{ get(named(:some_name, '/some_path/:id/?')) { params[:id] }}
+        get "/some_path/2"
+
+        last_response.status.must_equal 200
+        last_response.body.must_equal "2"
+      end
+
+      it 'should generate the route correctly' do
+        mock_app{ get(named(:some_name, '/some_path/:id/?')) { url_for(:some_name, id: 3, key: 'value') }}
+
+        get "/some_path/2"
+
+        last_response.status.must_equal 200
+        last_response.body.must_equal "/some_path/3?key=value"
+
+      end
+
+    end
+
+    describe 'and a trailing slash in the request' do
+
+      it 'should find the route correctly' do
+        mock_app{ get(named(:some_name, '/some_path/:id/?')) { params[:id] }}
+        get "/some_path/2/"
+
+        last_response.status.must_equal 200
+        last_response.body.must_equal "2"
+      end
+
+      it 'should generate the route correctly' do
+        mock_app{ get(named(:some_name, '/some_path/:id/?')) { url_for(:some_name, id: 3, key: 'value') }}
+
+        get "/some_path/2/"
+
+        last_response.status.must_equal 200
+        last_response.body.must_equal "/some_path/3?key=value"
+
+      end
+
+    end
+
+  end
+
 end

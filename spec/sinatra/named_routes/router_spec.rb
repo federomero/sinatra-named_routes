@@ -36,4 +36,9 @@ describe Sinatra::NamedRoutes::Router do
     subject.get(:admin, {:id => 'a/b'}).must_equal '/admin/a%2Fb'
   end
 
+  it 'should handle optional trailing slashes' do
+    subject.set('/admin/?', :admin)
+    subject.get(:admin).must_equal '/admin'
+  end
+
 end
